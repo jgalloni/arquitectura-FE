@@ -1,0 +1,39 @@
+<md-card>
+  Mis Incripciones
+  <md-card>
+    Ingenieria informatica
+    <md-list>
+      <md-list-item *ngFor="let ins of inscrip"> 
+        <h3 md-line>{{ins.materia.codigo}}-{{ins.materia.nombre}}</h3>
+        <p md-line>  
+          <span class="grey">Curso: {{ins.curso.docente}}, </span>
+          <span class="grey" *ngFor='let horario of ins.curso.horarios'>{{horario.dia}} de {{horario.desde}} a {{horario.hasta}}, </span>
+        </p>
+        <button md-mini-fab class='leftButton' color='warn'>
+          <md-icon class="md-24">delete</md-icon>
+        </button>
+      </md-list-item>
+    </md-list>
+  </md-card>
+</md-card>
+
+<md-card>
+  Oferta Academica
+  <md-card>
+    Ingenieria informatica
+    <md-list>
+      <md-list-item *ngFor="let materia of oferta"> 
+        <h3 md-line>{{materia.codigo}}</h3>
+        <p md-line> 
+          <span>{{materia.nombre}}</span>
+          <span class="grey">- correlativas: {{materia.correlativas}}</span>
+        </p>
+        <button md-mini-fab class='leftButton' (click)="popUp.view(materia.codigo)">
+          <md-icon class="md-24">info_outline</md-icon>
+        </button>
+      </md-list-item>
+    </md-list>
+  </md-card>
+</md-card>
+
+<app-materia-view #popUp (onSubmit)='inscribir($event)'></app-materia-view>
