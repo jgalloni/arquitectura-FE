@@ -14,6 +14,7 @@ export class MateriaViewComponent implements OnInit {
 
   private materia:Materia;
   private class='hide';
+  private errorMessage:any;
 
   @Output() onSubmit= new EventEmitter();
   constructor(private materiasService: MateriasServicesService) { }
@@ -23,10 +24,7 @@ export class MateriaViewComponent implements OnInit {
 
   view(codigo:string){
     this.materiasService.getMateriasByCodigo(codigo)
-      .then(a=>{ this.materia=a ;
-        console.log(this.materia);
-        this.class='show';
-    });
+    .subscribe(a=>{this.materia=a;this.class='show'} ,error=>this.errorMessage = <any>error);
   }
 
   hide(){
@@ -35,7 +33,7 @@ export class MateriaViewComponent implements OnInit {
   }
 
   submit(curso:Curso){
-    this.onSubmit.emit({curso:curso,materia:this.materia.codigo});
+    this.onSubmit.emit({curso:curso,materia:this.materia.codigo,nombre:this.materia.nombre});
     this.hide();
   }
 }

@@ -1,0 +1,7 @@
+foo:
+  build: .
+  ports:
+    - '4200:4200'
+  volumes:
+    - .:/home/app/insc
+    - /home/app/insc/node_modules

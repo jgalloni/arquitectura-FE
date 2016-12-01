@@ -11,6 +11,7 @@ import { InscripcionServiceService } from '../inscripcion-service.service';
 export class CursosListComponent implements OnInit {
   private oferta;
   private inscrip;
+  private errorMessage;
   constructor(private materiasService: MateriasServicesService,private inscripcionServiceService:InscripcionServiceService) { }
 
   ngOnInit() {
@@ -18,20 +19,25 @@ export class CursosListComponent implements OnInit {
   }
 
   reload(){
-    this.materiasService.getMaterias().then((result)=>this.oferta=result);
-    this.inscripcionServiceService.getInscripciones().then((result)=>this.inscrip=result);
+    this.materiasService.getMaterias()
+      .subscribe(
+        a=>{this.oferta=a} 
+        ,error=>this.errorMessage = <any>error);
+    this.inscripcionServiceService.getInscripciones()
+      .subscribe(a=>{
+        this.inscrip=a;
+      } ,error=>this.errorMessage = <any>error);
   }
 
   inscribir(result){
-    this.inscripcionServiceService.inscribirse(result.codigoMateria,result.curso)
-      .then(r=>{if(r) this.reload;});
-    this.reload();
+    console.log(result);
+    this.inscripcionServiceService.inscribirse(result.materia,result.curso,result.nombre)
+     .subscribe(r=>{if(r) this.reload();});
   }
   
   desinscribirse(curosId){
     this.inscripcionServiceService.desinscribirse(curosId)
-      .then(r=>{if(r) this.reload;});
-    this.reload();
+      .subscribe(r=>{if(r) this.reload();});
   }
 
 }

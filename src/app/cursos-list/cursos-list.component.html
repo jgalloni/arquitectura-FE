@@ -4,12 +4,12 @@
     Ingenieria informatica
     <md-list>
       <md-list-item *ngFor="let ins of inscrip"> 
-        <h3 md-line>{{ins.materia.codigo}}-{{ins.materia.nombre}}</h3>
+        <h3 md-line>{{ins.materia}}-{{ins.nombre}}</h3>
         <p md-line>  
           <span class="grey">Curso: {{ins.curso.docente}}, </span>
           <span class="grey" *ngFor='let horario of ins.curso.horarios'>{{horario.dia}} de {{horario.desde}} a {{horario.hasta}}, </span>
         </p>
-        <button md-mini-fab class='leftButton' color='warn'>
+        <button md-mini-fab class='leftButton' color='warn' (click)="desinscribirse(ins._id)">
           <md-icon class="md-24">delete</md-icon>
         </button>
       </md-list-item>
